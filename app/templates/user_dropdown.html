@@ -1,0 +1,55 @@
+<style>
+.navbar-login
+{
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.navbar-login-session
+{
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.icon-size
+{
+    font-size: 87px;
+}
+</style>
+
+
+<li class="dropdown">
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		<span class="glyphicon glyphicon-user"></span>
+		<strong>{{ current_user.username }}</strong>
+		<span class="glyphicon glyphicon-chevron-down"></span>
+	</a>
+	<ul class="dropdown-menu">
+		<li>
+			<div class="navbar-login">
+				<div class="row">
+					<div class="col-lg-4">
+						<p class="text-center">
+							<span class="glyphicon glyphicon-user icon-size"></span>
+						</p>
+					</div>
+					<div class="col-lg-8">
+						<p class="text-left"><strong>{{ current_user.username }}</strong></p>
+						<p class="text-left small">{{ current_user.email }}</p>
+						<p class="text-left">
+						<a href="{{ url_for('user.user_info', username=current_user.username) }}" class="btn btn-primary btn-block btn-sm">My Profile</a>
+						</p>
+						<p class="text-left">
+							<a href="#" class="btn btn-primary btn-block btn-sm">New Post</a>
+						</p>
+						<p class="text-left">
+							<a href="{{ url_for('auth.logout') }}" class="btn btn-danger btn-block btn-sm">Log Out</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</li>
+	</ul>
+</li>
