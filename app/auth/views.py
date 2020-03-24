@@ -3,7 +3,7 @@ from . import auth
 from .forms import LoginForm, RegistrationForm
 from .. import db
 from ..models import User
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -39,3 +39,21 @@ def register():
         flash('Registered. You can now login.')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
+
+
+@auth.before_app_request
+def before_request():
+    """ Denie access if user isn't confirmed yet """
+    if current_user.is_authenticated \
+            and not current_user.confirmed \
+            and request.blueprint != 'auth' \
+            and request.endpoint != 'static':
+                return redirect(url_for('auth.unconfirmed'))
+
+@auth.route('/unconfirmed')
+def unconfirmed():
+    if current_user.is_anonymous or current_user.confirmed:
+        return redirect(url_for('main.index'))
+    return render_template('auth/unconfirmed.html')
+
+

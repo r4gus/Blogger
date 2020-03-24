@@ -1,6 +1,7 @@
 <div class="panel panel-info">
 	<div class="panel-heading">
 		<h3 class="panel-title">{{ user.username }}</h3>
+		<small>Member since: {{ moment(user.member_since).format('LL') }}</small>
 	</div>
 	<div class="panel-body">
 		<div class="row">

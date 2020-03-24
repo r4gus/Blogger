@@ -5,6 +5,7 @@ from . import login_manager
 from flask_login import UserMixin, AnonymousUserMixin   # Managing user sessions
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
+from datetime import datetime
 
 class Permission:
     NONE                = 0
@@ -78,6 +79,8 @@ class User(UserMixin, db.Model):
     role_id             = db.Column(db.Integer, db.ForeignKey('roles.id'))
     self_description    = db.Column(db.UnicodeText(512))
     confirmed           = db.Column(db.Boolean, default=False)      # set to false until the user has confirmed his email
+    member_since        = db.Column(db.DateTime(), default=datetime.utcnow)
+    last_seen           = db.Column(db.DateTime(), default=datetime.utcnow)
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -120,6 +123,12 @@ class User(UserMixin, db.Model):
     def is_admin(self):
         return self.can(Permission.ADMIN)
 
+    def ping(self):
+        """ Update the last_seen field """
+        self.last_seen = datetime.utcnow()
+        db.session.add(self)
+        db.session.commit()
+
 
 class AnonymousUser(AnonymousUserMixin):
     def can(self, perm):
@@ -127,4 +136,9 @@ class AnonymousUser(AnonymousUserMixin):
 
     def is_admin(self):
         return False
+
+
+login_manager.anonymous_user = AnonymousUser    # Use the custom class as default (anonymous) user
+
+
 

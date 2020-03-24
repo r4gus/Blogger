@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}{{ super() }} - Please Authenticate{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+	<h1>Hello, {{ current_user.username }}!</h1>
+	<h3>Your account hasn't been confirmed yet.</h3>
+	Email verification is currently not available so please contact the system admin
+	for a verification of your account.
+</div>
+
+{% endblock %}

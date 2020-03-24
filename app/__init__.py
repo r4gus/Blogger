@@ -4,10 +4,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from config import config
+from flask_moment import Moment
 
 bootstrap = Bootstrap()
-db = SQLAlchemy()
-migrate = Migrate()
+db = SQLAlchemy()       # data base
+migrate = Migrate()     # data base migration
+moment = Moment()       # date-time rendering
+
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login' # set endpoint for login page
@@ -21,6 +24,7 @@ def create_app(config_name):
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
+    moment.init_app(app)
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
