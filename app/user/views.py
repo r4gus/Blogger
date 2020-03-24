@@ -2,8 +2,8 @@ from flask import Flask, request, render_template, session, redirect, url_for, f
 from flask_login import login_required, current_user
 from . import user
 from ..decorators import admin_required, permission_required
-from ..models import User, Role
-from .forms import EditProfileForm, EditProfileAdminForm
+from ..models import User, Role, Permission, Post
+from .forms import EditProfileForm, EditProfileAdminForm, PostForm
 from .. import db
 
 @user.route('/<username>')
@@ -34,6 +34,7 @@ def edit_profile():
     form.self_description.data = current_user.self_description
     return render_template('user/edit_profile.html', form=form)
 
+
 @user.route('/edit-profile/<int:id>', methods=['GET', 'POST'])
 @login_required
 @admin_required
@@ -56,5 +57,26 @@ def edit_profile_admin(id):
     form.role.data = user.role_id
     form.self_description.data = user.self_description
     return render_template('user/edit_profile.html', form=form, user=user)
+
+
+@user.route('/new_post', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.WRITE_ARTICLES)
+def new_post():
+    form = PostForm()
+    if current_user.can(Permission.WRITE_ARTICLES) and form.validate_on_submit():
+        post = Post(title = form.title.data,
+                    body = form.body.data,
+                    author = current_user._get_current_object())
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('main.posts'))
+    return render_template('user/new_post.html', form=form)
+
+
+
+
+
+
 
 

@@ -20,6 +20,15 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
+class Post(db.Model):
+    __tablename__ = 'posts'
+    id          = db.Column(db.Integer, primary_key=True)
+    title       = db.Column(db.String(64))
+    body        = db.Column(db.UnicodeText)
+    timestamp   = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    author_id   = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+
 class Role(db.Model):
     __tablename__ = 'roles'
     id      = db.Column(db.Integer, primary_key=True)
@@ -81,6 +90,7 @@ class User(UserMixin, db.Model):
     confirmed           = db.Column(db.Boolean, default=False)      # set to false until the user has confirmed his email
     member_since        = db.Column(db.DateTime(), default=datetime.utcnow)
     last_seen           = db.Column(db.DateTime(), default=datetime.utcnow)
+    posts               = db.relationship('Post', backref='author', lazy='dynamic')
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -139,6 +149,8 @@ class AnonymousUser(AnonymousUserMixin):
 
 
 login_manager.anonymous_user = AnonymousUser    # Use the custom class as default (anonymous) user
+
+
 
 
 

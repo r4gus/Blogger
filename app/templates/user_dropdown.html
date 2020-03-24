@@ -42,7 +42,7 @@
 						<a href="{{ url_for('user.user_info', username=current_user.username) }}" class="btn btn-primary btn-block btn-sm">My Profile</a>
 						</p>
 						<p class="text-left">
-							<a href="#" class="btn btn-primary btn-block btn-sm">New Post</a>
+						<a href="{{ url_for('user.new_post') }}" class="btn btn-primary btn-block btn-sm">New Post</a>
 						</p>
 						<p class="text-left">
 							<a href="{{ url_for('auth.logout') }}" class="btn btn-danger btn-block btn-sm">Log Out</a>

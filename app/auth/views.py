@@ -32,7 +32,7 @@ def register():
     form = RegistrationForm()
     
     if form.validate_on_submit():
-        user = User(email=form.email.data, username=form.username.data, phone_number="", self_description="")
+        user = User(email=form.email.data, username=form.username.data, self_description="")
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
@@ -44,11 +44,11 @@ def register():
 @auth.before_app_request
 def before_request():
     """ Denie access if user isn't confirmed yet """
-    if current_user.is_authenticated \
-            and not current_user.confirmed \
-            and request.blueprint != 'auth' \
-            and request.endpoint != 'static':
-                return redirect(url_for('auth.unconfirmed'))
+    if current_user.is_authenticated:
+        current_user.ping()
+        if not current_user.confirmed and request.blueprint != 'auth' and request.endpoint != 'static':
+            return redirect(url_for('auth.unconfirmed'))
+
 
 @auth.route('/unconfirmed')
 def unconfirmed():

@@ -14,6 +14,7 @@ class EditProfileForm(FlaskForm):
         if field.data != current_user.username and User.query.filter_by(username=field.data).first():
             raise ValidationError('Username already in use.')
 
+
 class EditProfileAdminForm(FlaskForm):
     email       = StringField('Email', validators=[DataRequired(), Length(1, 128), Email()])
     username    = StringField('Username', validators=[Length(1, 128),
@@ -35,3 +36,11 @@ class EditProfileAdminForm(FlaskForm):
     def validate_username(self, field):
         if field.data != self.user.username and User.query.filter_by(username=field.data).first():
             raise ValidationError('Username already in use.')
+
+
+class PostForm(FlaskForm):
+    """ Form for a user blog post """
+    title   = StringField('Title', validators=[DataRequired(), Length(1, 64)])
+    body    = TextAreaField('Content', validators=[DataRequired()])
+    submit  = SubmitField('Submit')
+
