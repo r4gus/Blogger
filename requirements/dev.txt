@@ -1,0 +1,2 @@
+-r requirements.txt
+faker==4.0.2

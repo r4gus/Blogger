@@ -7,6 +7,7 @@ class Config:
     WEB_ADMIN                           = os.environ.get('WEB_ADMIN')
     SQLALCHEMY_TRACK_MODIFICATIONS      = False
     SWEET_EMAIL                         = os.environ.get('SWEET_EMAIL') or 'admin@example.com'
+    POSTS_PER_PAGE                      = os.environ.get('POSTS_PER_PAGE') or 9
 
     def init_app(app):
         pass

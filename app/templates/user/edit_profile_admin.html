@@ -12,7 +12,14 @@
 	<form method="POST">
 		{{ form.hidden_tag() }}
 		{{ render_field(form.username, type='text', class='form-control') }}
+		{{ render_field(form.email, type='email', class='form-control') }}
 		{{ render_field(form.self_description, type='text', class='form-control', rows='4') }}
+		{{ render_field(form.role, class='form-control') }}
+
+		<div class="form-group form-check">
+			 {{ form.confirmed(class='form-check-input') }} {{ form.confirmed.label(class='form-check-label') }}
+		</div>
+
 		{{ form.submit(class='btn btn-primary') }}
 	</form>
 </div>

@@ -1,0 +1,35 @@
+{% macro pagination_widget(pagination, endpoint, search_str) %}
+<nav aria-label="Page navigation">
+<ul class="pagination pagination-lg justify-content-center">
+	<li {% if not pagination.has_prev %} class="page-item disabled" {% else %} class="page-item" {% endif %}>
+	    <a href="{% if pagination.has_prev %}
+	                 {{ url_for(endpoint, page = pagination.page - 1, search = search_str, **kwargs) }}
+	             {% else %} 
+		         #
+		     {% endif %}" class="page-link" aria-lable="Previous">&laquo;
+            </a>
+	</li>
+	{% for p in pagination.iter_pages() %}
+	    {% if p %}
+	        {% if p == pagination.page %}
+		    <li class="page-item active">
+			    <a class="page-link" href="{{ url_for(endpoint, page = p, search = search_str, **kwargs) }}">{{ p }}</a>
+	            </li>
+		{% else %}
+		    <li class="page-item">
+			    <a class="page-link" href="{{ url_for(endpoint, page = p, search = search_str, **kwargs) }}">{{ p }}</a>
+	            </li>
+		{% endif %}
+	    {% endif %}
+	{% endfor %}
+	<li {% if not pagination.has_next %} class="page-item disabled" {% else %} class="page-item" {% endif %}>
+	    <a href="{% if pagination.has_next %}
+	                 {{ url_for(endpoint, page = pagination.page + 1, search = search_str, **kwargs) }}
+	             {% else %} 
+		         #
+		     {% endif %}" class="page-link" aria-lable="Next">&raquo;
+            </a>
+	</li>
+</ul>
+</nav>
+{% endmacro %}

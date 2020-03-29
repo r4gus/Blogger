@@ -6,6 +6,8 @@ from flask_login import UserMixin, AnonymousUserMixin   # Managing user sessions
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 from datetime import datetime
+from markdown import markdown
+import bleach
 
 class Permission:
     NONE                = 0
@@ -24,9 +26,20 @@ class Post(db.Model):
     __tablename__ = 'posts'
     id          = db.Column(db.Integer, primary_key=True)
     title       = db.Column(db.String(64))
+    short       = db.Column(db.UnicodeText(128))
     body        = db.Column(db.UnicodeText)
     timestamp   = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     author_id   = db.Column(db.Integer, db.ForeignKey('users.id'))
+    body_html   = db.Column(db.UnicodeText)
+
+    @staticmethod
+    def on_changed_body(target, value, oldvalue, initiator):
+        """ converts markdown to html """
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em',
+                        'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'h4', 'p']
+        target.body_html = bleach.linkify(bleach.clean(markdown(value, output_format='html'),
+                                          tags=allowed_tags, strip=True))
 
 
 class Role(db.Model):
@@ -150,6 +163,7 @@ class AnonymousUser(AnonymousUserMixin):
 
 login_manager.anonymous_user = AnonymousUser    # Use the custom class as default (anonymous) user
 
+db.event.listen(Post.body, 'set', Post.on_changed_body) # Generate Html from body (markdown) if body changes
 
 
 

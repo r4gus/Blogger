@@ -1,4 +1,4 @@
-{% extends "bootstrap/base.html" %}
+{% extends "sweetbootstrap.html" %}
 
 {% block title %}WebApp{% endblock %}
 
@@ -10,24 +10,22 @@
 
 {% block navbar %}
 
-<div class="container">
-	<nav class="navbar navbar-inverse sticky-top">
-		<a class="navbar-brand" href="{{ url_for('main.index') }}">
-			WebApp
-		</a>
+<div class="container pb-3">
+	<nav class="navbar navbar-light sticky-top shadow-sm">
+		<a class="navbar-brand brand" href="{{ url_for('main.index') }}"><img src="/static/icon.svg" width="30" heigth="30" alt=""></a>
 
-		<div class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
-				<li><a href="{{ url_for('main.index') }}">Home</a></li>
-				<li><a href="{{ url_for('main.posts') }}">Posts</a></li>
-			</ul>
+		<ul class="nav nav-pills nav-justified">
+			<form class="form-inline" method="get" action="{{ url_for('main.index') }}">
+			<input class="form-control mr-sm-2 search-box" type="search" placeholder="Search" name="search">
+			<button class="btn btn-outline-success my-2 my-sm-0 search-button" type="submit">Search</button>
+		    </form>
+		</ul>
 
-			<ul class="nav navbar-nav navbar-right">
-				{% if current_user.is_authenticated %}
-				{% include "user_dropdown.html" %}
-				{% endif %}
-			</ul>
-		</div>
+		<ul class="nav navbar-right">
+			{% if current_user.is_authenticated %}
+			{% include "user_dropdown.html" %}
+			{% endif %}
+		</ul>
 	</nav>
 
 </div>
@@ -45,11 +43,14 @@
 	{% block page_content %}{% endblock %}
 </div>
 
+<div class="container">
 {% include "footer.html" %}
+</div>
 {% endblock %}
 
 {% block scripts %}
 {{ super() }}
 {{ moment.include_moment() }}
+{{ pagedown.include_pagedown() }}
 {% endblock %}
 

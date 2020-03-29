@@ -56,7 +56,7 @@ def edit_profile_admin(id):
     form.confirmed.data = user.confirmed
     form.role.data = user.role_id
     form.self_description.data = user.self_description
-    return render_template('user/edit_profile.html', form=form, user=user)
+    return render_template('user/edit_profile_admin.html', form=form, user=user)
 
 
 @user.route('/new_post', methods=['GET', 'POST'])
@@ -66,11 +66,12 @@ def new_post():
     form = PostForm()
     if current_user.can(Permission.WRITE_ARTICLES) and form.validate_on_submit():
         post = Post(title = form.title.data,
+                    short = form.short.data,
                     body = form.body.data,
                     author = current_user._get_current_object())
         db.session.add(post)
         db.session.commit()
-        return redirect(url_for('main.posts'))
+        return redirect(url_for('main.index'))
     return render_template('user/new_post.html', form=form)
 
 

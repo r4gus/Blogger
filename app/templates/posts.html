@@ -1,24 +1,14 @@
-{% extends "base.html" %}
-
-{% block title %}{{ super() }} - Posts{% endblock %}
-
-
-{% block page_content %}
+<div class="card-columns">
 {% for post in posts %}
-<div class="panel panel-default md-3" style="max-width: 540px;">
-	<div class="row no-gutters">
-		<div class="col-md-4">
-			<img src="..." class="panel-img" alt="...">
-		</div>
-		<div class="col-md-8">
-			<div class="panel-body">
-				<h5>Title</h5>
-				<p>Content .................................................................................</p>
-				<p><small class="text-muted">Last updated 3 mins ago</small></p>
-			</div>
-		</div>
+	<div class="card">
+		<a class="text-decoration-none" href="{{ url_for('main.post', id=post.id) }}">
+		    <img src="static/placeholder.jpg" class="card-img-top" alt="..." >
+		</a>
+    		    <div class="card-body">
+			    <h4 class="card-title"><a class="link" href="{{ url_for('main.post', id=post.id) }}">{{ post.title }}</a></h4>
+			<p class="card-text">{{ post.short }}</p>
+			<p class="card-text"><small class="text-muted">{{ moment(post.timestamp).fromNow(refresh=True) }}</small></p>
+    		    </div>
 	</div>
-</div>
 {% endfor %}
-{% endblock %}
-
+</div>
