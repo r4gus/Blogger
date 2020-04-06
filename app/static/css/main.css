@@ -1,5 +1,10 @@
+html, body {
+	height: 100%;
+}
+
 .background {
 	background-color: #a29180;
+	min-height: 100vh;
 }
 
 .navbar {
@@ -38,4 +43,10 @@ input.search-box:focus {
 
 .footer {
 	background-color: #eedfcc;
+	height: 80px;
 }
+
+.content {
+	min-height: calc(100vh - 70px);
+}
+
