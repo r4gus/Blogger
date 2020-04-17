@@ -46,3 +46,10 @@ class PostForm(FlaskForm):
     body    = PageDownField('Content', validators=[DataRequired()])
     submit  = SubmitField('Submit')
 
+
+class EditPostForm(FlaskForm):
+    """ Form for a user blog post """
+    title   = StringField('Title', validators=[DataRequired(), Length(1, 64)])
+    short   = TextAreaField('Short Description', validators=[DataRequired(), Length(1, 128)])
+    body    = PageDownField('Content', validators=[DataRequired()])
+    submit  = SubmitField('Submit')

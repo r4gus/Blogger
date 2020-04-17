@@ -19,7 +19,6 @@ def index():
     pagination = entries.paginate(page, per_page=current_app.config['POSTS_PER_PAGE'], 
                                   error_out=False) 
     posts = pagination.items
-    print(search_str)
     return render_template('index.html', posts=posts, pagination=pagination, search_str=search_str)
 
 

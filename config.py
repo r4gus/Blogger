@@ -8,7 +8,8 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS      = False
     SWEET_EMAIL                         = os.environ.get('SWEET_EMAIL') or 'admin@example.com'
     POSTS_PER_PAGE                      = os.environ.get('POSTS_PER_PAGE') or 9
-    UPLOAD_FOLDER                       = '/static/images'
+    UPLOAD_FOLDER                       = os.path.join(basedir, 'app/static/images')
+    ALLOWED_EXTENSIONS                  = {'png', 'jpg', 'jpeg'}
 
     def init_app(app):
         pass

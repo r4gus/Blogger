@@ -31,6 +31,7 @@ class Post(db.Model):
     timestamp   = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     author_id   = db.Column(db.Integer, db.ForeignKey('users.id'))
     body_html   = db.Column(db.UnicodeText)
+    image_name  = db.Column(db.String(64))  # filename for picture
 
     @staticmethod
     def on_changed_body(target, value, oldvalue, initiator):

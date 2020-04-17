@@ -6,9 +6,15 @@
 <div class="container mb-3">
     <div class="row mb-2">
 	<div class="col-md-4 p-2">
- 	    <img src="../static/placeholder.jpg" class="img-thumbnail" style="width: 100%;" alt="..." data-toggle="modal" data-target="#exampleModal">
+ 	    <img src="{%if post.image_name == None %}../static/placeholder.jpg{% else %}../static/images/{{ post.image_name }}{% endif %}" 
+			 class="img-thumbnail" style="width: 100%;" alt="..." data-toggle="modal" data-target="#exampleModal">
+
 	    <h1 class="pb-3">{{ post.title }}</h1>
   	    <h5>{{ post.short }}</h5>
+
+		<button type="button" class="btn btn-primary btn-sm">
+		<a class="btn btn-default" href="{{ url_for('user.edit_post', id=post.id) }}">Edit Post</a>
+		</button>
 	</div>
 	<div class="col-md-7 offset-md-1 p-2">
 		{% if post.body_html %}
@@ -25,7 +31,7 @@
 	<div class="modal-dialog" role="document">
 <div class="modal-content">
       <div class="modal-body">
- 	    <img src="../static/placeholder.jpg"  style="width: 100%;">
+ 	    <img src="{%if post.image_name == None %}../static/placeholder.jpg{% else %}../static/images/{{ post.image_name }}{% endif %}"  style="width: 100%;">
       </div>
     </div>
 	</div>
