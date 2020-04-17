@@ -11,10 +11,11 @@
 
 	    <h1 class="pb-3">{{ post.title }}</h1>
   	    <h5>{{ post.short }}</h5>
-
-		<button type="button" class="btn btn-primary btn-sm">
-		<a class="btn btn-default" href="{{ url_for('user.edit_post', id=post.id) }}">Edit Post</a>
-		</button>
+		
+		{% if post.author_id == current_user.id or current_user.is_admin() %}
+		<a class="btn btn-primary btn-sm" href="{{ url_for('user.edit_post', id=post.id) }}">Edit</a>
+		<a class="btn btn-danger btn-sm" href="{{ url_for('user.delete_post', id=post.id) }}">Delete</a>
+		{% endif %}
 	</div>
 	<div class="col-md-7 offset-md-1 p-2">
 		{% if post.body_html %}
