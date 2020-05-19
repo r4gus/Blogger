@@ -105,6 +105,7 @@ class User(UserMixin, db.Model):
     member_since        = db.Column(db.DateTime(), default=datetime.utcnow)
     last_seen           = db.Column(db.DateTime(), default=datetime.utcnow)
     posts               = db.relationship('Post', backref='author', lazy='dynamic')
+    image_name          = db.Column(db.String(64))  # filename for user picture
 
     def __repr__(self):
         return '<User %r>' % self.username

@@ -29,6 +29,24 @@ def admin():
 def edit_profile():
     form = EditProfileForm()
     if form.validate_on_submit():
+
+        if 'image' in request.files:
+            file = request.files['image']
+            if file.filename != '':
+                if file and allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
+                    if os.path.isfile(os.path.join(current_app.config['USER_PICTURES'], filename)) == False:
+                        if current_user.image_name and current_user.image_name != 'user_placeholder.jpg':
+                            os.remove(os.path.join(current_app.config['USER_PICTURES'], current_user.image_name))
+                        file.save(os.path.join(current_app.config['USER_PICTURES'], filename))
+                        current_user.image_name = filename
+                    else:
+                        flash('Filename does already exist')
+                        return render_template(url_for('user.edit_profile'), form=form)
+                else:
+                    flash('Invalid filename.')
+                    return render_template(url_for('user.edit_profile'), form=form)
+
         current_user.username = form.username.data
         current_user.self_description = form.self_description.data
         db.session.add(current_user._get_current_object())

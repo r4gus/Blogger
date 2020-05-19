@@ -10,6 +10,7 @@ class Config:
     SWEET_PW                            = os.environ.get('SWEET_PW') or 'admin'
     POSTS_PER_PAGE                      = os.environ.get('POSTS_PER_PAGE') or 9
     UPLOAD_FOLDER                       = os.path.join(basedir, 'app/static/images')
+    USER_PICTURES                       = os.path.join(basedir, 'app/static/profile_pictures')
     ALLOWED_EXTENSIONS                  = {'png', 'jpg', 'jpeg'}
 
     def init_app(app):
