@@ -167,5 +167,3 @@ login_manager.anonymous_user = AnonymousUser    # Use the custom class as defaul
 db.event.listen(Post.body, 'set', Post.on_changed_body) # Generate Html from body (markdown) if body changes
 
 
-
-

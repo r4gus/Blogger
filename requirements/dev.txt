@@ -1,2 +1,0 @@
--r requirements.txt
-faker==3.0.1
