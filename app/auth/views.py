@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, session, redirect, url_for, flash
 from . import auth
 from .forms import LoginForm, RegistrationForm
+from ..decorators import admin_required, permission_required
 from .. import db
 from ..models import User
 from flask_login import login_user, logout_user, login_required, current_user
@@ -28,11 +29,21 @@ def logout():
     return redirect(url_for('main.index'))
 
 @auth.route('/register', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def register():
+    """
+    Registration Form only the admin can fill out.
+
+    To allow registration by others, comment out:
+    1. login_required
+    2. admin_required
+    3. set confirmed to false
+    """
     form = RegistrationForm()
     
     if form.validate_on_submit():
-        user = User(email=form.email.data, username=form.username.data, self_description="")
+        user = User(email=form.email.data, username=form.username.data, self_description="", confirmed=True)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()

@@ -28,7 +28,13 @@
 	</a>
 	<div class="dropdown-menu dropdown-menu-right">
 		<a href="{{ url_for('user.user_info', username=current_user.username) }}" class="dropdown-item">My Profile</a>
+
 		<a href="{{ url_for('user.new_post') }}" class="dropdown-item">New Post</a>
+
+		{% if current_user.is_admin() %}
+		<a href="{{ url_for('auth.register') }}" class="dropdown-item">Add User</a>
+		{% endif %}
+
 		<div class="dropdown-divider"></div>
 		<a href="{{ url_for('auth.logout') }}" class="dropdown-item">Log Out</a>
 	</div>
