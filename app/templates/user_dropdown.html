@@ -27,6 +27,10 @@
 		<span class="glyphicon glyphicon-chevron-down"></span>
 	</a>
 	<div class="dropdown-menu dropdown-menu-right">
+        {% if current_user.is_admin() %}
+		<a href="{{ url_for('user.admin') }}" class="dropdown-item">Administrate User</a>
+        {% endif %}
+
 		<a href="{{ url_for('user.user_info', username=current_user.username) }}" class="dropdown-item">My Profile</a>
 
 		<a href="{{ url_for('user.new_post') }}" class="dropdown-item">New Post</a>

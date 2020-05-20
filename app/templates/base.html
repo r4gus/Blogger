@@ -1,6 +1,6 @@
 {% extends "sweetbootstrap.html" %}
 
-{% block title %}Franzi Brutzelt{% endblock %}
+{% block title %}Franzi Kocht{% endblock %}
 
 {% block head %}
 {{ super() }}
@@ -12,7 +12,8 @@
 
 <div class="container pb-3">
 	<nav class="navbar navbar-light sticky-top shadow-sm">
-		<a class="navbar-brand brand" href="{{ url_for('main.index') }}"><img src="/static/icon.svg" width="30" heigth="30" alt=""></a>
+		<a class="navbar-brand brand" href="{{ url_for('main.index') }}"><img
+            src="/static/franzi_kocht_logo.png" width="60" heigth="60" alt=""></a>
 
 		<ul class="nav nav-pills nav-justified">
 			<form class="form-inline" method="get" action="{{ url_for('main.index') }}">

@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from . import user
 from ..decorators import admin_required, permission_required
 from ..models import User, Role, Permission, Post
-from .forms import EditProfileForm, EditProfileAdminForm, PostForm, EditPostForm
+from .forms import EditProfileForm, EditProfileAdminForm, PostForm, EditPostForm, EditPasswordForm
 from .. import db
 from werkzeug.utils import secure_filename
 import os
@@ -12,17 +12,23 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
 
 @user.route('/<username>')
-@login_required
 def user_info(username):
     """ User info page """
+    page = request.args.get('page', 1, type=int) # get the requested page or the first one
     u = User.query.filter_by(username=username).first_or_404()
-    return render_template('user/user.html', user=u)
+    posts = Post.query.filter_by(author_id=u.id)
+    posts = posts.order_by(Post.timestamp.desc())
+    pagination = posts.paginate(page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
+    posts = pagination.items
+    return render_template('user/user.html', user=u, posts=posts, pagination=pagination)
 
-@user.route('/admin')
+@user.route('/administrate-users')
 @login_required
 @admin_required
 def admin():
-    return "You're admin"
+    user = User.query.filter_by(id=current_user.id).first_or_404()
+    users = User.query.all()
+    return render_template('user/admin.html', admin=user, users=users)
 
 @user.route('/edit-profile', methods=['GET', 'POST'])
 @login_required
@@ -57,6 +63,23 @@ def edit_profile():
     form.self_description.data = current_user.self_description
     return render_template('user/edit_profile.html', form=form)
 
+@user.route('/new_password/<int:id>', methods=['GET', 'POST'])
+@login_required
+def new_password(id):
+    user = User.query.get_or_404(id)
+    form = EditPasswordForm()
+    if form.validate_on_submit():
+        if current_user == user or current_user.is_admin():
+            user.set_password(form.password.data)
+            db.session.add(user)
+            db.session.commit()
+            flash('Password succesfully changed.')
+            return redirect(url_for('.user_info', username=user.username))
+        else:
+            flash("You're not allowed to perform this operation.")
+            return redirect(url_for('.user_info', username=user.username))
+    return render_template('user/edit_password.html', form=form, user=user)
+
 
 @user.route('/edit-profile/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -80,6 +103,21 @@ def edit_profile_admin(id):
     form.role.data = user.role_id
     form.self_description.data = user.self_description
     return render_template('user/edit_profile_admin.html', form=form, user=user)
+
+
+@user.route('/delete_user/<int:id>', methods=['GET'])
+@login_required
+def delete_user(id):
+    user = User.query.get_or_404(id)
+
+    if current_user.id != id and not current_user.is_admin():
+        flash("You can only delete your own account")
+        return redirect(url_for('user.user_info', username=current_user.username))
+    else:
+        db.session.delete(user)
+        db.session.commit()
+        flash("Account successfully deleted")
+        return redirect(url_for('main.index'))
 
 
 @user.route('/new_post', methods=['GET', 'POST'])

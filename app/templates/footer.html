@@ -2,7 +2,9 @@
 <footer class="container footer">
 <div class="row py-2">
     <div class="col text-center">
+    {% if current_user.is_authenticated == False %}
 	<a href="{{ url_for('auth.login') }}">Login</a>
+    {% endif %}
     </div>
     <div class="col text-center footer-1">
     </div>

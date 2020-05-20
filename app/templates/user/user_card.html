@@ -4,14 +4,16 @@
     class="mr-3 mt-3 rounded-circle" style="width: 120px; height: 120px;" alt="...">
     
     <div class="media-body">
-        <h4 class="card-title">{{ user.username }} </h4>
+        <a class="link" href="{{ url_for('user.user_info', username=user.username) }}">
+            <h4 class="card-title">{{ user.username }}</h4>
+        </a>
         <small><i>Member since: {{ moment(user.member_since).format('LL') }}</i></small>
+        <hr>
         <p class="card-text">{{ user.self_description }}</p>
-        {% if user == current_user %}
-        <a href="{{ url_for('user.edit_profile') }}" class="btn btn-primary">Edit Profile</a>
-        {% endif %}
         {% if current_user.is_admin() %}
         <a class="btn btn-danger" href="{{ url_for('user.edit_profile_admin', id=user.id) }}">Edit Profile [Admin]</a>
+        {% elif user == current_user %}
+        <a href="{{ url_for('user.edit_profile') }}" class="btn btn-primary">Edit Profile</a>
         {% endif %}
     </div>
 </div>

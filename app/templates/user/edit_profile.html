@@ -17,4 +17,7 @@
 		{{ form.submit(class='btn btn-primary', value='Upload') }}
 	</form>
 </div>
+<div align="center">
+    <a class="btn btn-primary" href="{{ url_for('user.new_password', id=current_user.id) }}">New Password</a>
+</div>
 {% endblock %}

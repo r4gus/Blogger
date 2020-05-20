@@ -50,3 +50,7 @@ input.search-box:focus {
 	min-height: calc(100vh - 70px);
 }
 
+a.link {
+	color: #cd4f39;
+}
+
