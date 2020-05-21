@@ -1,4 +1,7 @@
 <div class="card-columns">
+{% if not posts %}
+<h3>No Matches</h3>
+{% else %}
 {% for post in posts %}
 	<div class="card">
 		<a class="text-decoration-none" href="{{ url_for('main.post', id=post.id) }}">
@@ -15,4 +18,5 @@
     		    </div>
 	</div>
 {% endfor %}
+{% endif %}
 </div>

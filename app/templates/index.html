@@ -5,6 +5,8 @@
 
 {% block page_content %}
 	{% include "posts.html" %}
-	
+    
+    {% if posts %}
 	{{ macros.pagination_widget(pagination, 'main.index', search_str) }}
+    {% endif %}
 {% endblock %}
