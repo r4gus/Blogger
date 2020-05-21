@@ -24,9 +24,15 @@
   {% block body %}
 	
   <div class="background" >
-  {% block navbar %}{% endblock %}
-  {% block content %}{% endblock %}
-  {% block footer %}{% endblock %}
+      <header>
+        {% block navbar %}{% endblock %}
+      </header>
+      <main role="main">
+        {% block content %}{% endblock %}
+      </main>
+      <footer class="text-muted">
+        {% block footer %}{% endblock %}
+      </footer>
   </div>
 
   {% block scripts %}
