@@ -27,3 +27,7 @@ def post(id):
     post = Post.query.get_or_404(id)
     user = User.query.filter_by(id=post.author_id).first()
     return render_template('post.html', post=post, user=user)
+
+@main.route('/datenschutzerklaerung')
+def dsgvo():
+    return render_template('dsgvo_datenschutzerklärung.html')
