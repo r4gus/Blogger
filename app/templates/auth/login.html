@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
+{% from "_formhelpers.html" import render_field %}
 
 {% block title %}{{ super() }} - login{% endblock %}
 
@@ -9,12 +9,17 @@
 </div>
 
 <div class="page-body">
-	{{ wtf.quick_form(form) }}
+	<form method="POST">
+		{{ form.hidden_tag() }}
+		{{ render_field(form.email, type='email', class='form-control', placeholder='Enter email') }}
+		{{ render_field(form.password, type='password', class='form-control', placeholder='Password') }}
+
+		<div class="form-group form-check">
+			 {{ form.remember_me(class='form-check-input') }} {{ form.remember_me.label(class='form-check-label') }}
+		</div>
+		
+		{{ form.submit(class='btn btn-primary') }}
+	</form>
 </div>
-<p>
-	New user?
-	<a href="{{ url_for('auth.register') }}">
-		Click here to register
-	</a>
-</p>
+<!-- <p class="text-center">New user?<a href="{{ url_for('auth.register') }}">Click here to register</a></p> -->
 {% endblock %}

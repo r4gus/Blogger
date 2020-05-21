@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
+{% from "_formhelpers.html" import render_field %}
 
 {% block title %}{{ super() }} - register{% endblock %}
 
@@ -9,6 +9,13 @@
 </div>
 
 <div class="page-body">
-	{{ wtf.quick_form(form) }}
+	<form method="POST">
+		{{ form.hidden_tag() }}
+		{{ render_field(form.username, type='text', class='form-control', placeholder='Username') }}
+		{{ render_field(form.email, type='email', class='form-control', placeholder='Enter email') }}
+		{{ render_field(form.password, type='password', class='form-control', placeholder='Password') }}
+		{{ render_field(form.password2, type='password', class='form-control', placeholder='Password') }}
+		{{ form.submit(class='btn btn-primary') }}
+	</form>
 </div>
 {% endblock %}

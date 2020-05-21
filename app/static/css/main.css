@@ -1,0 +1,56 @@
+html, body {
+	height: 100%;
+}
+
+.background {
+	background-color: #a29180;
+	min-height: 100vh;
+}
+
+.navbar {
+	background-color: #eedfcc;
+}
+
+a.link:link {
+	color: black;
+}
+
+a.link:visited {
+	color: black;
+}
+
+a.link:hover {
+	color: #cd4f39;
+	text-decoration: none;
+}
+
+button.search-button {
+	background-color: #cd4f39;
+	border: #cd4f39;
+	color: white;
+}
+
+button.search-button:hover {
+	background-color: white;
+	border: #cd4f39;
+	color: #cd4f39;
+}
+
+input.search-box:focus {
+	box-shadow: inset 0 0 2px 2px #cd4f39;
+}
+
+
+.footer {
+	background-color: #eedfcc;
+	height: 80px;
+}
+
+.content {
+	min-height: calc(100vh - 70px);
+}
+
+a.link {
+	color: #cd4f39;
+}
+

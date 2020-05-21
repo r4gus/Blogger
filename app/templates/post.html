@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}{{ super() }} - {{ post.title }}{% endblock %}
+
+{% block page_content %}
+<div class="container mb-3">
+    <div class="row mb-2">
+	<div class="col-md-4 p-2">
+ 	    <img src="{%if post.image_name == None %}../static/placeholder.jpg{% else %}../static/images/{{ post.image_name }}{% endif %}" 
+			 class="img-thumbnail" style="width: 100%;" alt="..." data-toggle="modal" data-target="#exampleModal">
+
+	    <h1 class="pb-3">{{ post.title }}</h1>
+  	    <h5>{{ post.short }}</h5>
+		
+		{% if post.author_id == current_user.id or current_user.is_admin() %}
+		<a class="btn btn-primary btn-sm" href="{{ url_for('user.edit_post', id=post.id) }}">Edit</a>
+        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmationModal">
+            Delete
+        </button>
+		{% endif %}
+	</div>
+	<div class="col-md-7 offset-md-1 p-2">
+		{% if post.body_html %}
+		    {{ post.body_html | safe }}
+		{% else %}
+		    <h3>Ooops... there should actually be a recipe here.</h3>
+		{% endif %}
+	</div>
+    </div>
+</div>
+
+<hr>
+{% include "user/user_card.html" %}
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+<div class="modal-content">
+      <div class="modal-body">
+ 	    <img src="{%if post.image_name == None %}../static/placeholder.jpg{% else %}../static/images/{{ post.image_name }}{% endif %}"  style="width: 100%;">
+      </div>
+    </div>
+	</div>
+</div>
+
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmationModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            
+            <div class="modal-header">
+                <h4 class="modal-title">WARNING</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                You're about to delete this post.
+                This change is permanent!
+            </div>
+
+            <div class="modal-footer">
+		        <a class="btn btn-danger" href="{{ url_for('user.delete_post', id=post.id) }}">Delete</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

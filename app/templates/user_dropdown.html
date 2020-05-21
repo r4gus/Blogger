@@ -20,36 +20,26 @@
 </style>
 
 
-<li class="dropdown">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+<div class="dropdown">
+	<a href="#" class="dropdown-toggle link" data-toggle="dropdown">
 		<span class="glyphicon glyphicon-user"></span>
 		<strong>{{ current_user.username }}</strong>
 		<span class="glyphicon glyphicon-chevron-down"></span>
 	</a>
-	<ul class="dropdown-menu">
-		<li>
-			<div class="navbar-login">
-				<div class="row">
-					<div class="col-lg-4">
-						<p class="text-center">
-							<span class="glyphicon glyphicon-user icon-size"></span>
-						</p>
-					</div>
-					<div class="col-lg-8">
-						<p class="text-left"><strong>{{ current_user.username }}</strong></p>
-						<p class="text-left small">{{ current_user.email }}</p>
-						<p class="text-left">
-						<a href="{{ url_for('user.user_info', username=current_user.username) }}" class="btn btn-primary btn-block btn-sm">My Profile</a>
-						</p>
-						<p class="text-left">
-						<a href="{{ url_for('user.new_post') }}" class="btn btn-primary btn-block btn-sm">New Post</a>
-						</p>
-						<p class="text-left">
-							<a href="{{ url_for('auth.logout') }}" class="btn btn-danger btn-block btn-sm">Log Out</a>
-						</p>
-					</div>
-				</div>
-			</div>
-		</li>
-	</ul>
-</li>
+	<div class="dropdown-menu dropdown-menu-right">
+        {% if current_user.is_admin() %}
+		<a href="{{ url_for('user.admin') }}" class="dropdown-item">Administrate User</a>
+        {% endif %}
+
+		<a href="{{ url_for('user.user_info', username=current_user.username) }}" class="dropdown-item">My Profile</a>
+
+		<a href="{{ url_for('user.new_post') }}" class="dropdown-item">New Post</a>
+
+		{% if current_user.is_admin() %}
+		<a href="{{ url_for('auth.register') }}" class="dropdown-item">Add User</a>
+		{% endif %}
+
+		<div class="dropdown-divider"></div>
+		<a href="{{ url_for('auth.logout') }}" class="dropdown-item">Log Out</a>
+	</div>
+</div>

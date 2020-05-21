@@ -1,8 +1,14 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, TextAreaField, BooleanField, SelectField
 from flask_login import current_user
-from wtforms.validators import DataRequired, Length, Regexp, ValidationError, Email
+from wtforms.validators import DataRequired, Length, Regexp, ValidationError, Email, EqualTo
 from ..models import User, Role
+from flask_pagedown.fields import PageDownField
+
+class EditPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[Length(6, 32), DataRequired(), EqualTo('password2', message='Password must match.')])
+    password2 = PasswordField('Confirm Password', validators=[DataRequired()])
+    submit              = SubmitField('Submit')
 
 class EditProfileForm(FlaskForm):
     username            = StringField('Username', validators=[Length(1, 128),
@@ -41,6 +47,14 @@ class EditProfileAdminForm(FlaskForm):
 class PostForm(FlaskForm):
     """ Form for a user blog post """
     title   = StringField('Title', validators=[DataRequired(), Length(1, 64)])
-    body    = TextAreaField('Content', validators=[DataRequired()])
+    short   = TextAreaField('Short Description', validators=[DataRequired(), Length(1, 128)])
+    body    = PageDownField('Content', validators=[DataRequired()])
     submit  = SubmitField('Submit')
 
+
+class EditPostForm(FlaskForm):
+    """ Form for a user blog post """
+    title   = StringField('Title', validators=[DataRequired(), Length(1, 64)])
+    short   = TextAreaField('Short Description', validators=[DataRequired(), Length(1, 128)])
+    body    = PageDownField('Content', validators=[DataRequired()])
+    submit  = SubmitField('Submit')

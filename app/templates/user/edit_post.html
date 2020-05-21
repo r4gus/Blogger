@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+{% block title %}{{ super() }} - Edit Post{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+	<h1>Edit Post</h1>
+</div>
+
+<div class="page-body">
+	<form method="POST" enctype="multipart/form-data">
+		{{ form.hidden_tag() }}
+		{{ render_field(form.title, type='text', class='form-control', placeholder='Title') }}
+		{{ render_field(form.short, class='form-control', rows='2') }}
+		{{ render_field(form.body, class='form-control', rows='4') }}
+        <input type="file" name="image">
+		{{ form.submit(class='btn btn-primary', value='Upload') }}
+	</form>
+</div>
+{% endblock %}

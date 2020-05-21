@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
+{% from "_formhelpers.html" import render_field %}
 
 {% block title %}{{ super() }} - new post{% endblock %}
 
@@ -9,6 +9,13 @@
 </div>
 
 <div class="page-body">
-	{{ wtf.quick_form(form) }}
+	<form method="POST" enctype="multipart/form-data">
+		{{ form.hidden_tag() }}
+		{{ render_field(form.title, type='text', class='form-control', placeholder='Title') }}
+		{{ render_field(form.short, class='form-control', rows='2') }}
+		{{ render_field(form.body, class='form-control', rows='4') }}
+        <input type="file" name="image">
+		{{ form.submit(class='btn btn-primary', value='Upload') }}
+	</form>
 </div>
 {% endblock %}
