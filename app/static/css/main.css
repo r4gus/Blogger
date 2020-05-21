@@ -13,16 +13,29 @@ html, body {
 }
 
 
-a.link:link {
+a.cyan {
+	color: #00cccc;
+}
+
+a.cyan:visited {
+	color: #00cccc;
+}
+
+a.cyan:hover {
+	color: white;
+	text-decoration: none;
+}
+
+a.cyan:active {
+	color: #00cccc;
+}
+
+a.reversed-link {
 	color: black;
 }
 
-a.link:visited {
-	color: black;
-}
-
-a.link:hover {
-	color: #00ffff;
+a.reversed-link:hover {
+	color: #00cccc;
 	text-decoration: none;
 }
 
@@ -58,16 +71,12 @@ input.search-box:focus {
 
 
 .footer {
-	background-color: #eedfcc;
+	background-color: #F7CAC9;
 	height: 120px;
 }
 
 .content {
-	min-height: calc(100vh - 70px);
-}
-
-a.link {
-	color: #cd4f39;
+	min-height: calc(100vh - 235px); /* used to stick the footer to the bottom */
 }
 
 .fa {

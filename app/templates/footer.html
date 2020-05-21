@@ -1,19 +1,18 @@
-
-<footer class="container footer">
-<div class="row py-2">
-    <div class="col text-center">
-    {% if current_user.is_authenticated == False %}
-	<a href="{{ url_for('auth.login') }}">Login</a>
-    {% endif %}
+<div class="container">
+    <div class="row py-2">
+        <div class="col text-center">
+        {% if current_user.is_authenticated == False %}
+        <a class="cyan" href="{{ url_for('auth.login') }}">Login</a>
+        {% endif %}
+        </div>
+        <div class="col text-center footer-1">
+            <a class="cyan" href="{{ url_for('main.dsgvo') }}">Datenschutzerklärung</a><br>
+            <a class="cyan" href="{{ url_for('main.impressum') }}">Impressum</a>
+        </div>
     </div>
-    <div class="col text-center footer-1">
-        <a href="{{ url_for('main.dsgvo') }}">Datenschutzerklärung</a><br>
-	    <a href="{{ url_for('main.impressum') }}">Impressum</a>
+    <div class="row py-2 align-items-end">
+        <div class="col text-center">
+            Develloped by <a class="cyan" target="_blank" href="https://github.com/r4gus">r4gus</a>
+        </div>
     </div>
 </div>
-<div class="row py-2 align-items-end">
-    <div class="col text-center">
-        Develloped by <a href="https://github.com/r4gus">r4gus</a>
-    </div>
-</div>
-</footer>
