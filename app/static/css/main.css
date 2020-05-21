@@ -43,7 +43,7 @@ input.search-box:focus {
 
 .footer {
 	background-color: #eedfcc;
-	height: 80px;
+	height: 120px;
 }
 
 .content {
@@ -52,5 +52,24 @@ input.search-box:focus {
 
 a.link {
 	color: #cd4f39;
+}
+
+.fa {
+    padding: 15px;
+    font-size: 20px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
+}
+
+.fa:hover {
+    opacity: 0.7;
+    color: white;
+}
+
+.fa-instagram {
+    background-color: #cd4f39;
+    color: white;
 }
 

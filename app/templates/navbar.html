@@ -1,0 +1,23 @@
+<div class="container pb-3">
+	<nav class="navbar navbar-light sticky-top shadow-sm">
+		<a class="navbar-brand brand" href="{{ url_for('main.index') }}"><img
+            src="/static/franzi_kocht_logo.png" width="60" heigth="60" alt=""></a>
+        
+		<ul class="nav nav-pills nav-justified">
+			<form class="form-inline" method="get" action="{{ url_for('main.index') }}">
+			<input class="form-control mr-sm-2 search-box" type="search" placeholder="Search" name="search">
+			<button class="btn btn-outline-success my-2 my-sm-0 search-button" type="submit">Search</button>
+		    </form>
+		</ul>
+
+		<ul class="nav navbar-right">
+            <li class="nav-item">
+                <a href="https://www.instagram.com/franzi.kocht/" target="_blank" class="fa fa-instagram"></a>            
+            </li>
+			{% if current_user.is_authenticated %}
+			{% include "user_dropdown.html" %}
+			{% endif %}
+		</ul>
+	</nav>
+
+</div>

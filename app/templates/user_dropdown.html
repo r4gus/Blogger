@@ -20,7 +20,7 @@
 </style>
 
 
-<div class="dropdown">
+<li class="nav-item dropdown">
 	<a href="#" class="dropdown-toggle link" data-toggle="dropdown">
 		<span class="glyphicon glyphicon-user"></span>
 		<strong>{{ current_user.username }}</strong>
@@ -42,4 +42,4 @@
 		<div class="dropdown-divider"></div>
 		<a href="{{ url_for('auth.logout') }}" class="dropdown-item">Log Out</a>
 	</div>
-</div>
+</li>

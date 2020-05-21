@@ -30,4 +30,8 @@ def post(id):
 
 @main.route('/datenschutzerklaerung')
 def dsgvo():
-    return render_template('dsgvo_datenschutzerklärung.html')
+    return render_template('legal/dsgvo_datenschutzerklärung.html')
+
+@main.route('/impressum')
+def impressum():
+    return render_template('legal/impressum.html')
