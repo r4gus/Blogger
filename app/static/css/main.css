@@ -7,6 +7,10 @@ html, body {
 	min-height: 100vh;
 }
 
+p, h1, h2, h3, h4, a {
+    font-family: Georgia, serif;
+}
+
 .navbar {
 	background-color: #F7CAC9; /*#eedfcc; */
     margin-bottom: 25px;
@@ -30,12 +34,30 @@ a.cyan:active {
 	color: #00cccc;
 }
 
+a.amaranth {
+	color: #992347;
+}
+
+a.amaranth:visited {
+	color: #992347;
+}
+
+a.amaranth:hover {
+	color: white;
+	text-decoration: none;
+}
+
+a.amaranth:active {
+	color: white;
+}
+
+
 a.reversed-link {
 	color: black;
 }
 
 a.reversed-link:hover {
-	color: #00cccc;
+	color: #992347;
 	text-decoration: none;
 }
 
@@ -66,7 +88,7 @@ input.search-box:focus {
     border-top: none;
     border-left: none;
     border-right: none;
-    border-bottom: 2px solid #00ffff;
+    border-bottom: 2px solid #992347;
 }
 
 
