@@ -20,11 +20,11 @@
 </style>
 
 
-<li class="nav-item dropdown">
-	<a href="#" class="dropdown-toggle link" data-toggle="dropdown">
-		<span class="glyphicon glyphicon-user"></span>
+<div class="nav-item dropdown">
+	<a style="text-decoration: none" href="#" class="amaranth dropdown-toggle link" data-toggle="dropdown">
+		<span class="fa fa-user-o"></span>
 		<strong>{{ current_user.username }}</strong>
-		<span class="glyphicon glyphicon-chevron-down"></span>
+		<span class=""></span>
 	</a>
 	<div class="dropdown-menu dropdown-menu-right">
         {% if current_user.is_admin() %}
@@ -42,4 +42,4 @@
 		<div class="dropdown-divider"></div>
 		<a href="{{ url_for('auth.logout') }}" class="dropdown-item">Log Out</a>
 	</div>
-</li>
+</div>
