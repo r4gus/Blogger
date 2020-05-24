@@ -7,7 +7,7 @@ html, body {
 	min-height: 100vh;
 }
 
-p, h1, h2, h3, h4, a {
+p, h1, h2, h3, h4, a, b, em, i, li, ol, pre, strong, ul {
     font-family: Georgia, serif;
 }
 
@@ -75,20 +75,13 @@ button.search-button:hover {
 
 input.search-box {
     background-color: #F7CAC9;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 2px solid white;
+    border: 2px solid #cd4f39;
 }
 
 input.search-box:focus {
 	box-shadow: none;
-    border: none;
     background-color: #F7CAC9;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 2px solid #992347;
+    border: 2px solid white;
 }
 
 
