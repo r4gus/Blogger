@@ -43,7 +43,8 @@ def edit_profile():
                     filename = secure_filename(file.filename)
                     if os.path.isfile(os.path.join(current_app.config['USER_PICTURES'], filename)) == False:
                         if current_user.image_name and current_user.image_name != 'user_placeholder.jpg':
-                            os.remove(os.path.join(current_app.config['USER_PICTURES'], current_user.image_name))
+                            if os.path.isfile(os.path.join(current_app.config['USER_PICTURES'], current_user.image_name)):
+                                os.remove(os.path.join(current_app.config['USER_PICTURES'], current_user.image_name))
                         file.save(os.path.join(current_app.config['USER_PICTURES'], filename))
                         current_user.image_name = filename
                     else:
@@ -115,7 +116,8 @@ def delete_user(id):
         return redirect(url_for('user.user_info', username=current_user.username))
     else:
         if user.image_name and user.image_name != 'user_placeholder.jpg':
-            os.remove(os.path.join(current_app.config['USER_PICTURES'], user.image_name))
+            if os.path.isfile(os.path.join(current_app.config['USER_PICTURES'], user.image_name)):
+                os.remove(os.path.join(current_app.config['USER_PICTURES'], user.image_name))
         db.session.delete(user)
         db.session.commit()
         flash("Account successfully deleted")
@@ -172,7 +174,8 @@ def edit_post(id):
 					filename = secure_filename(file.filename)
 					if os.path.isfile(os.path.join(current_app.config['UPLOAD_FOLDER'], filename)) == False:
 						if post.image_name and post.image_name != 'placeholder.jpg':
-							os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], post.image_name))
+                                                        if os.path.isfile(os.path.join(current_app.config['UPLOAD_FOLDER'], post.image_name)):
+							        os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], post.image_name))
 						file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
 						post.image_name = filename
 					else:
@@ -206,7 +209,8 @@ def delete_post(id):
 		return redirect(url_for('main.post', id=post.id))
 	else:
 		if post.image_name and post.image_name != 'placeholder.jpg':
-		    os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], post.image_name))
+                    if os.path.isfile(os.path.join(current_app.config['UPLOAD_FOLDER'], post.image_name)):
+		        os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], post.image_name))
 		db.session.delete(post)
 		db.session.commit()
 		flash("Post successfully deleted.")
