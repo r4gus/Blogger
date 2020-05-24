@@ -118,6 +118,20 @@ class User(UserMixin, db.Model):
             if self.role is None:
                 self.role = Role.query.filter_by(default=True).first()
     
+    @staticmethod
+    def insert_admin():
+        """Initialize an admin account"""
+        em    = current_app.config['SWEET_EMAIL']
+        pw    = current_app.config['SWEET_PW']
+        user  = User.query.filter_by(email=em).first()
+
+        if user is None:
+            user = User(username="admin", email=em, role=Role.query.filter_by(name='Admin').first(), confirmed=True)
+            user.set_password(pw)
+            db.session.add(user)
+            db.session.commit()
+
+    
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
