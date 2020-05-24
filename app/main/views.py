@@ -16,7 +16,7 @@ def index():
     else:
         entries = Post.query.order_by(Post.timestamp.desc())
 
-    pagination = entries.paginate(page, per_page=current_app.config['POSTS_PER_PAGE'],      # display POSTS_PER_PAGE posts on a single page
+    pagination = entries.paginate(page, per_page=int(current_app.config['POSTS_PER_PAGE']),      # display POSTS_PER_PAGE posts on a single page
                                   error_out=False) 
     posts = pagination.items
     return render_template('index.html', posts=posts, pagination=pagination, search_str=search_str)
