@@ -159,62 +159,62 @@ def new_post():
 @login_required
 @permission_required(Permission.WRITE_ARTICLES)
 def edit_post(id):
-	post = Post.query.get_or_404(id)
-	form = EditPostForm()
+    post = Post.query.get_or_404(id)
+    form = EditPostForm()
 
-	if post.author_id != current_user.id and not current_user.is_admin():
-		flash("You can only edit your own posts.")
-		return redirect(url_for('main.index'))
+    if post.author_id != current_user.id and not current_user.is_admin():
+        flash("You can only edit your own posts.")
+        return redirect(url_for('main.index'))
 
-	if form.validate_on_submit():
-		if 'image' in request.files:
-			file = request.files['image']
-			if file.filename != '':
-				if file and allowed_file(file.filename):
-					filename = secure_filename(file.filename)
-					if os.path.isfile(os.path.join(current_app.config['UPLOAD_FOLDER'], filename)) == False:
-						if post.image_name and post.image_name != 'placeholder.jpg':
-                                                        if os.path.isfile(os.path.join(current_app.config['UPLOAD_FOLDER'], post.image_name)):
-							        os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], post.image_name))
-						file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-						post.image_name = filename
-					else:
-						flash('Invalid filename.')
-						return render_template(url_for('user.edit_post'), form=form)
-				else:
-					flash('Invalid filename.')
-					return render_template(url_for('user.edit_post'), form=form)
-		post.title = form.title.data
-		post.short = form.short.data
-		post.body  = form.body.data
-		db.session.add(post)
-		db.session.commit()
-		flash('The post has been updated.')
-		return redirect(url_for('main.post', id=post.id))
+    if form.validate_on_submit():
+        if 'image' in request.files:
+            file = request.files['image']
+            if file.filename != '':
+                if file and allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
+                    if os.path.isfile(os.path.join(current_app.config['UPLOAD_FOLDER'], filename)) == False:
+                        if post.image_name and post.image_name != 'placeholder.jpg':
+                            if os.path.isfile(os.path.join(current_app.config['UPLOAD_FOLDER'], post.image_name)):
+                                os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], post.image_name))
+                            file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+                            post.image_name = filename
+                    else:
+                        flash('Invalid filename.')
+                        return render_template(url_for('user.edit_post'), form=form)
+                else:
+                    flash('Invalid filename.')
+                    return render_template(url_for('user.edit_post'), form=form)
+        post.title = form.title.data
+        post.short = form.short.data
+        post.body  = form.body.data
+        db.session.add(post)
+        db.session.commit()
+        flash('The post has been updated.')
+        return redirect(url_for('main.post', id=post.id))
 
-	form.title.data = post.title
-	form.short.data = post.short
-	form.body.data = post.body
-	return render_template('user/edit_post.html', form=form)
+    form.title.data = post.title
+    form.short.data = post.short
+    form.body.data = post.body
+    return render_template('user/edit_post.html', form=form)
 
 
 @user.route('/delete_post/<int:id>', methods=['GET'])
 @login_required
 @permission_required(Permission.WRITE_ARTICLES)
 def delete_post(id):
-	post = Post.query.get_or_404(id)
-	
-	if post.author_id != current_user.id and not current_user.is_admin():
-		flash("You can only delete your own posts.")
-		return redirect(url_for('main.post', id=post.id))
-	else:
-		if post.image_name and post.image_name != 'placeholder.jpg':
-                    if os.path.isfile(os.path.join(current_app.config['UPLOAD_FOLDER'], post.image_name)):
-		        os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], post.image_name))
-		db.session.delete(post)
-		db.session.commit()
-		flash("Post successfully deleted.")
-		return redirect(url_for('main.index'))
+    post = Post.query.get_or_404(id)
+
+    if post.author_id != current_user.id and not current_user.is_admin():
+        flash("You can only delete your own posts.")
+        return redirect(url_for('main.post', id=post.id))
+    else:
+        if post.image_name and post.image_name != 'placeholder.jpg':
+            if os.path.isfile(os.path.join(current_app.config['UPLOAD_FOLDER'], post.image_name)):
+                os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], post.image_name))
+        db.session.delete(post)
+        db.session.commit()
+        flash("Post successfully deleted.")
+        return redirect(url_for('main.index'))
 
 
 
