@@ -7,14 +7,16 @@ class Config:
     WEB_ADMIN                           = os.environ.get('WEB_ADMIN')
     SQLALCHEMY_TRACK_MODIFICATIONS      = False
     SWEET_EMAIL                         = os.environ.get('SWEET_EMAIL') or 'admin@example.com'
-    SWEET_PW                            = os.environ.get('SWEET_PW') or 'admin'
+    SWEET_PW                            = os.environ.get('SWEET_PW')
     POSTS_PER_PAGE                      = os.environ.get('POSTS_PER_PAGE') or 9
     UPLOAD_FOLDER                       = os.path.join(basedir, 'app/static/images')
     USER_PICTURES                       = os.path.join(basedir, 'app/static/profile_pictures')
     ALLOWED_EXTENSIONS                  = {'png', 'jpg', 'jpeg'}
+    SSL_REDIRECT                        = False
 
     def init_app(app):
         pass
+
 
 class DevelopmentConfig(Config):
     DEBUG = True
@@ -27,9 +29,20 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI     = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'database/data.sqlite')
 
+
+class HerokuConfig(ProductionConfig):
+    @classmethod
+    def init_app(cls, app):
+        ProductionConfig.init_app(app)
+
+    SSL_REDIRECT = True if os.environ.get('DYNO') else False
+
 config = {
         'development' : DevelopmentConfig,
         'testing' : TestingConfig,
         'production' : ProductionConfig,
         'default' : DevelopmentConfig,
+        'heroku' : HerokuConfig,
 }
+
+

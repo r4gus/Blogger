@@ -33,5 +33,17 @@
 {{ super() }}
 {{ moment.include_moment() }}
 {{ pagedown.include_pagedown() }}
+
+<script>
+    $(document).ready(function(){
+        $(".nav-header").on('show.bs.collapse', function(){
+            $(".navbar-toggler").html('<span id="toggler" class="fa fa-caret-up"></span>');
+        });
+
+        $(".nav-header").on('hide.bs.collapse', function(){
+            $(".navbar-toggler").html('<span id="toggler" class="fa fa-caret-down"></span>');
+        });
+    });
+</script>
 {% endblock %}
 

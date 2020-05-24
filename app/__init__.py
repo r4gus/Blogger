@@ -35,4 +35,8 @@ def create_app(config_name):
     from .user import user as user_blueprint
     app.register_blueprint(user_blueprint, url_prefix='/user')
 
+    if app.config['SSL_REDIRECT']:
+        from flask_sslify import SSLify
+        sslify = SSLify(app)
+
     return app
