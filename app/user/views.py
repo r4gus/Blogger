@@ -18,7 +18,7 @@ def user_info(username):
     u = User.query.filter_by(username=username).first_or_404()
     posts = Post.query.filter_by(author_id=u.id)
     posts = posts.order_by(Post.timestamp.desc())
-    pagination = posts.paginate(page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
+    pagination = posts.paginate(page, per_page=int(current_app.config['POSTS_PER_PAGE']), error_out=False)
     posts = pagination.items
     return render_template('user/user.html', user=u, posts=posts, pagination=pagination)
 
