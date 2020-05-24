@@ -26,7 +26,7 @@ class Post(db.Model):
     __tablename__ = 'posts'
     id          = db.Column(db.Integer, primary_key=True)
     title       = db.Column(db.String(64))
-    short       = db.Column(db.UnicodeText(128))
+    short       = db.Column(db.UnicodeText)
     body        = db.Column(db.UnicodeText)
     timestamp   = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     author_id   = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -100,7 +100,7 @@ class User(UserMixin, db.Model):
     email               = db.Column(db.String(128), index=True, unique=True)
     password_hash       = db.Column(db.String(128))
     role_id             = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    self_description    = db.Column(db.UnicodeText(512))
+    self_description    = db.Column(db.UnicodeText)
     confirmed           = db.Column(db.Boolean, default=False)      # set to false until the user has confirmed his email
     member_since        = db.Column(db.DateTime(), default=datetime.utcnow)
     last_seen           = db.Column(db.DateTime(), default=datetime.utcnow)
