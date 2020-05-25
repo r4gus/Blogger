@@ -7,6 +7,8 @@ from .forms import EditProfileForm, EditProfileAdminForm, PostForm, EditPostForm
 from .. import db
 from werkzeug.utils import secure_filename
 import os
+from cloudinary.uploader import upload, destroy
+from cloudinary.utils import cloudinary_url
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
@@ -41,6 +43,7 @@ def edit_profile():
             if file.filename != '':
                 if file and allowed_file(file.filename):
                     filename = secure_filename(file.filename)
+                    """
                     if os.path.isfile(os.path.join(current_app.config['USER_PICTURES'], filename)) == False:
                         if current_user.image_name and current_user.image_name != 'user_placeholder.jpg':
                             if os.path.isfile(os.path.join(current_app.config['USER_PICTURES'], current_user.image_name)):
@@ -49,6 +52,20 @@ def edit_profile():
                         current_user.image_name = filename
                     else:
                         flash('Filename does already exist')
+                        return render_template(url_for('user.edit_profile'), form=form)
+                    """
+                    
+                    if current_user.image_id:
+                        destroy(public_id=current_user.image_id) # delete old image
+                    upload_result = upload(file, folder="images", unique_filename=True) # upload new image
+
+                    if upload_result:
+                        secure_url = upload_result['secure_url'] # url that points to the image
+                        public_id = upload_result['public_id'] # image id
+                        current_user.image_url = secure_url
+                        current_user.image_id = public_id
+                    else:
+                        flash("Couldn't upload the given file.")
                         return render_template(url_for('user.edit_profile'), form=form)
                 else:
                     flash('Invalid filename.')
@@ -115,9 +132,14 @@ def delete_user(id):
         flash("You can only delete your own account")
         return redirect(url_for('user.user_info', username=current_user.username))
     else:
+        """
         if user.image_name and user.image_name != 'user_placeholder.jpg':
             if os.path.isfile(os.path.join(current_app.config['USER_PICTURES'], user.image_name)):
                 os.remove(os.path.join(current_app.config['USER_PICTURES'], user.image_name))
+        """
+        if user.image_id:
+            destroy(public_id=user.image_id) # delete old image
+
         db.session.delete(user)
         db.session.commit()
         flash("Account successfully deleted")
@@ -140,11 +162,23 @@ def new_post():
             if file.filename != '':                         # has a file been selected ?
                 if file and allowed_file(file.filename):        # is file allowed for upload ?
                     filename = secure_filename(file.filename)
+                    """
                     if os.path.isfile(os.path.join(current_app.config['UPLOAD_FOLDER'], filename)) == False: # does file name already exist?
                         file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
                         post.image_name = filename
                     else:
                         flash('Filename does already exist.')
+                        return render_template('user/new_post.html', form=form)
+                    """
+                    upload_result = upload(file, folder="images", unique_filename=True) # upload new image
+
+                    if upload_result:
+                        secure_url = upload_result['secure_url'] # url that points to the image
+                        public_id = upload_result['public_id'] # image id
+                        post.image_url = secure_url
+                        post.image_id = public_id
+                    else:
+                        flash("Couldn't upload the given file.")
                         return render_template('user/new_post.html', form=form)
                 else:
                     flash('Invalid filename.')
@@ -172,6 +206,7 @@ def edit_post(id):
             if file.filename != '':
                 if file and allowed_file(file.filename):
                     filename = secure_filename(file.filename)
+                    """
                     if os.path.isfile(os.path.join(current_app.config['UPLOAD_FOLDER'], filename)) == False:
                         if post.image_name and post.image_name != 'placeholder.jpg':
                             if os.path.isfile(os.path.join(current_app.config['UPLOAD_FOLDER'], post.image_name)):
@@ -180,6 +215,19 @@ def edit_post(id):
                             post.image_name = filename
                     else:
                         flash('Invalid filename.')
+                        return render_template(url_for('user.edit_post'), form=form)
+                    """
+                    if post.image_id:
+                        destroy(public_id=post.image_id) # delete old image
+                    upload_result = upload(file, folder="images", unique_filename=True) # upload new image
+
+                    if upload_result:
+                        secure_url = upload_result['secure_url'] # url that points to the image
+                        public_id = upload_result['public_id'] # image id
+                        post.image_url = secure_url
+                        post.image_id = public_id
+                    else:
+                        flash("Couldn't upload the given file.")
                         return render_template(url_for('user.edit_post'), form=form)
                 else:
                     flash('Invalid filename.')
@@ -208,9 +256,14 @@ def delete_post(id):
         flash("You can only delete your own posts.")
         return redirect(url_for('main.post', id=post.id))
     else:
+        """
         if post.image_name and post.image_name != 'placeholder.jpg':
             if os.path.isfile(os.path.join(current_app.config['UPLOAD_FOLDER'], post.image_name)):
                 os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], post.image_name))
+        """
+
+        if post.image_id:
+            destroy(public_id=post.image_id) # delete old image
         db.session.delete(post)
         db.session.commit()
         flash("Post successfully deleted.")

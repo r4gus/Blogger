@@ -5,10 +5,10 @@
 {% for post in posts %}
 	<div class="card">
 		<a class="text-decoration-none" href="{{ url_for('main.post', id=post.id) }}">
-            {% if post.image_name == None %}
+            {% if post.image_url == None %}
 		    <img src="../static/placeholder.jpg" class="card-img-top" alt="placeholder.jpg" >
             {% else %}
-		    <img src="../static/images/{{ post.image_name }}" class="card-img-top" alt="{{ post.image_name }}" >
+		    <img src="{{ post.image_url }}" class="card-img-top" alt="{{ post.image_name }}" >
             {% endif %}
 		</a>
     		    <div class="card-body">

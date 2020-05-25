@@ -1,6 +1,6 @@
 <div class="media p-3">
-    <img src="{%if user.image_name == None %}../../static/user_placeholder.jpg{%
-    else %}../../static/profile_pictures/{{ user.image_name }}{% endif %}"
+    <img src="{%if user.image_url == None %}../../static/user_placeholder.jpg{%
+    else %}{{ user.image_url }}{% endif %}"
     class="mr-3 mt-3 rounded-circle" style="width: 120px; height: 120px;" alt="...">
     
     <div class="media-body">
