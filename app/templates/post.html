@@ -6,7 +6,7 @@
 <div class="container mb-3">
     <div class="row mb-2">
 	<div class="col-md-4 p-2">
- 	    <img src="{%if post.image_url == None %}../static/placeholder.jpg{% else %}{{ post.image_url }}{% endif %}" 
+ 	    <img src="{%if post.image_url == None %}../static/default_image.png{% else %}{{ post.image_url }}{% endif %}" 
 			 class="img-thumbnail" style="width: 100%;" alt="..." data-toggle="modal" data-target="#exampleModal">
 
 	    <h1 class="pb-3">{{ post.title }}</h1>
@@ -37,7 +37,7 @@
 	<div class="modal-dialog" role="document">
 <div class="modal-content">
       <div class="modal-body">
- 	    <img src="{%if post.image_url == None %}../static/placeholder.jpg{% else %}{{ post.image_url }}{% endif %}"  style="width: 100%;">
+ 	    <img src="{%if post.image_url == None %}../static/default_image.png{% else %}{{ post.image_url }}{% endif %}"  style="width: 100%;">
       </div>
     </div>
 	</div>

@@ -6,7 +6,7 @@
 	<div class="card">
 		<a class="text-decoration-none" href="{{ url_for('main.post', id=post.id) }}">
             {% if post.image_url == None %}
-		    <img src="../static/placeholder.jpg" class="card-img-top" alt="placeholder.jpg" >
+		    <img src="../static/default_image.png" class="card-img-top" alt="placeholder.jpg" >
             {% else %}
 		    <img src="{{ post.image_url }}" class="card-img-top" alt="{{ post.image_name }}" >
             {% endif %}
