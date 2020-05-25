@@ -91,7 +91,7 @@ input.search-box:focus {
 }
 
 .content {
-	min-height: calc(100vh - 235px); /* used to stick the footer to the bottom */
+	min-height: calc(100vh - 350px); /* used to stick the footer to the bottom */
 }
 
 .fa {
