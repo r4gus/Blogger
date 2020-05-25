@@ -10,7 +10,10 @@
                 <h4 class="text-white">Contact</h4>
                 <ul class="list-unstyled">
                     <li>
-                        <a class="fa fa-instagram amaranth" href="https://www.instagram.com/franzi.kocht/" target="_blank"> Follow on Instagram</a>
+                        <a  class="fa fa-instagram amaranth"
+                            href="https://www.instagram.com/franzi.kocht/"
+                            target="_blank"> Follow on Instagram</a></br>
+                        <a class="fa fa-envelope-open-o amaranth" href="mailto: info@franzi-kocht.de"> info@franzi-kocht.de</a>
                     </li>
                 </ul>
             </div>
@@ -20,14 +23,14 @@
 <!-- ./Collapsed Info Section -->
 <!--Navbar -->
 <nav class="navbar navbar-light shadow-sm">
-    <div class="container-fluid d-flex justify-content-between">
+    <div class="container-fluid d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3">
         <a class="navbar-brand d-flex align-items-center" href="{{ url_for('main.index') }}">
             <!--<strong>Franzi Kocht</strong>-->
-            <img src="/static/logos/franzi_simple.png" height="80" alt="Franzi">
+            <img src="/static/logos/franzi_simple.png" height="96" alt="Franzi">
         </a>
 
-		<form class="form-inline" method="get" action="{{ url_for('main.index') }}">
-			<input class="form-control mr-sm-2 search-box" type="search" placeholder="Search" name="search">
+		<form class="my-3 my-md-0 mr-md-3 form-inline" method="get" action="{{ url_for('main.index') }}">
+			<input class="form-control mr-sm-2 search-box fa" type="search" placeholder="Search" name="search">
 		</form>
 
         {% if current_user.is_authenticated %}
