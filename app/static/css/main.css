@@ -87,11 +87,11 @@ input.search-box:focus {
 
 .footer {
 	background-color: #F7CAC9;
-	height: 120px;
+	height: 145px;
 }
 
 .content {
-	min-height: calc(100vh - 350px); /* used to stick the footer to the bottom */
+	min-height: calc(100vh - 375px); /* used to stick the footer to the bottom */
 }
 
 .fa {

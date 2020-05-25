@@ -2,7 +2,7 @@
     <div class="row py-2">
         <div class="col text-center">
         {% if current_user.is_authenticated == False %}
-        <a class="amaranth" href="{{ url_for('auth.login') }}">Login</a>
+        <a class="amaranth" href="{{ url_for('auth.login') }}">Login</a><br>
         {% endif %}
         </div>
         <div class="col text-center footer-1">
@@ -12,8 +12,9 @@
     </div>
     <div class="row py-2 align-items-end">
         <div class="col text-center">
+            Franzi-Kocht &#169; 2020<br>
             Develloped by <a class="amaranth" target="_blank"
-                href="https://github.com/r4gus/Blogger">r4gus</a>, Copyright (c) 2020 David Sugar
+                href="https://github.com/r4gus/Blogger">r4gus</a>, Copyright &#169; 2020 David Sugar
         </div>
     </div>
 </div>
