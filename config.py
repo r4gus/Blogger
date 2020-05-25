@@ -13,6 +13,7 @@ class Config:
     USER_PICTURES                       = os.path.join(basedir, 'app/static/profile_pictures')
     ALLOWED_EXTENSIONS                  = {'png', 'jpg', 'jpeg'}
     SSL_REDIRECT                        = False
+    CLOUDINARY_URL                      = os.environ.get('CLOUDINARY_URL') or None
 
     def init_app(app):
         pass

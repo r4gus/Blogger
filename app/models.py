@@ -31,7 +31,9 @@ class Post(db.Model):
     timestamp   = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     author_id   = db.Column(db.Integer, db.ForeignKey('users.id'))
     body_html   = db.Column(db.UnicodeText)
-    image_name  = db.Column(db.String(64))  # filename for picture
+    image_name  = db.Column(db.String(64))  # filename/ url for picture
+    image_id    = db.Column(db.String(256)) # public_id for external hosting
+    image_url   = db.Column(db.String(256)) # url to image 
 
     @staticmethod
     def on_changed_body(target, value, oldvalue, initiator):
@@ -105,7 +107,9 @@ class User(UserMixin, db.Model):
     member_since        = db.Column(db.DateTime(), default=datetime.utcnow)
     last_seen           = db.Column(db.DateTime(), default=datetime.utcnow)
     posts               = db.relationship('Post', backref='author', lazy='dynamic')
-    image_name          = db.Column(db.String(64))  # filename for user picture
+    image_name          = db.Column(db.String(64))  # filename/ url for user picture
+    image_id            = db.Column(db.String(256)) # public_id for external hosting
+    image_url           = db.Column(db.String(256)) # url to image 
 
     def __repr__(self):
         return '<User %r>' % self.username
